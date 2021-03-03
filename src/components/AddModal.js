@@ -13,7 +13,20 @@ function MyVerticallyCenteredModal(props) {
     newObject[propertyName] = propertyValue;
     formHandler(newObject);
   };
-
+  
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    switch (props.data.actionType) {
+      case "Add":
+        props.addHandler({ id: generatedId,...props.data, ...formState })
+        break;
+      case "Update":
+        props.updHandler(props.data.id, { ...props.data, ...formState });
+          break;
+      default:
+        break;
+    }
+  }
   return (
     <Modal
       show={props.show}
@@ -24,18 +37,12 @@ function MyVerticallyCenteredModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Add/ Update Data
+          {props.data.actionType} data
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form
-          onSubmit={(e) =>
-            props.updHandler(
-              props.data?.id ?? generatedId,
-              { ...props.data, ...formState },
-              e
-            )
-          }
+          onSubmit={handleSubmit}
         >
           <Form.Group as={Row} controlId="formPlaintextEmail">
             <Form.Label column sm="2">

@@ -1,11 +1,11 @@
 import { Card, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
-function BootstrapCard(props) {
+function InventryCard(props) {
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card style={{ width: "18rem", }}>
       <Card.Img
-        style={{ height: "250px" }}
+        style={{ height: "200px" }}
         variant="top"
         src={props.data.image}
       />
@@ -18,11 +18,10 @@ function BootstrapCard(props) {
           ${props.data.price}
         </Card.Subtitle>
         <Card.Text>
-          {props.data.description.split(" ").slice(0, 10).join(" ") + "..."}
+          {props.data.description?.split(" ").slice(0, 10).join(" ") + "..."}
         </Card.Text>
-        {props.location.pathname === "/inventry" ? (
           <div>
-            <Button onClick={() => props.showHandler(props.data.id)}>
+            <Button onClick={() => props.showHandler(props.data.id, "update")}>
               Update Item
             </Button>
             <Button
@@ -32,9 +31,8 @@ function BootstrapCard(props) {
               Remove Item
             </Button>
           </div>
-        ) : null}
       </Card.Body>
     </Card>
   );
 }
-export default withRouter(BootstrapCard)
+export default withRouter(InventryCard)
