@@ -8,9 +8,16 @@ const ReactFirebaseFileUpload = (props) => {
   const [showProgress, showProcessHandler] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  const reducedTitle = (str) => {
+    let words = str.split(" ");
+    let decStr = words.length <= 3 ? str : words.slice(0, 3).join(" ") + "...";
+    return encodeURIComponent(decStr);
+  };
   const handleUpload = () => {
     showProcessHandler(true);
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    const uploadTask = storage
+      .ref(`images/${reducedTitle(props.title)}`)
+      .put(image);
     uploadTask.on(
       "state_changed",
       (snapshot) => {

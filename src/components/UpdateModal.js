@@ -1,10 +1,10 @@
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import React, { useState, useRef } from "react";
-import UploadImage from './UploadImage'
+import UploadImage from "./UploadImage";
 
 function MyVerticallyCenteredModal(props) {
   const [formState, formHandler] = useState(props.data);
-  const urlRef = useRef(null)
+  const urlRef = useRef(null);
   let date = new Date();
   let generatedId = date.getMilliseconds();
 
@@ -15,25 +15,27 @@ function MyVerticallyCenteredModal(props) {
     newObject[propertyName] = propertyValue;
     formHandler(newObject);
   };
-  
+
   const handleSubmit = (e) => {
-    e.preventDefault()
-    if(!urlRef.current.value){return false}
+    e.preventDefault();
+    if (!urlRef.current.value) {
+      return false;
+    }
     switch (props.data.actionType) {
       case "Add":
-        props.addHandler({ id: generatedId,...props.data, ...formState })
+        props.addHandler({ id: generatedId, ...props.data, ...formState });
         break;
       case "Update":
         props.updHandler(props.data.id, { ...props.data, ...formState });
-          break;
+        break;
       default:
         break;
     }
-  }
+  };
   const imageUrlHandler = (url) => {
-    urlRef.current.value = url
-    formHandler({ ...formState, image: url })
-  }
+    urlRef.current.value = url;
+    formHandler({ ...formState, image: url });
+  };
 
   return (
     <Modal
@@ -109,10 +111,14 @@ function MyVerticallyCenteredModal(props) {
           </Form.Group>
           <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
             <Form.Label column sm="2">
-             Upload Image
+              Upload Image
             </Form.Label>
             <Col sm="10">
-              <UploadImage oldImageUrl={props.data?.image} urlHandler={imageUrlHandler} />
+              <UploadImage
+                title={props.data?.title}
+                oldImageUrl={props.data?.image}
+                urlHandler={imageUrlHandler}
+              />
             </Col>
           </Form.Group>
           <Form.Group as={Row} controlId="formPlaintextEmail">
@@ -120,7 +126,14 @@ function MyVerticallyCenteredModal(props) {
               Image URL
             </Form.Label>
             <Col sm="10">
-              <Form.Control required ref={urlRef} name="image" type="url" disabled defaultValue={ props.data?.image }/>
+              <Form.Control
+                required
+                ref={urlRef}
+                name="image"
+                type="url"
+                disabled
+                defaultValue={props.data?.image}
+              />
             </Col>
           </Form.Group>
           <div style={{ marginLeft: "35%" }}>

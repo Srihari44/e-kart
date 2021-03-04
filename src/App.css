@@ -1,11 +1,16 @@
-.App {
-  text-align: center;
+body {
   background-color: #282c34;
 }
-.card-body .btn{
+.App {
+  text-align: center;
+}
+.card-body .btn {
   margin: 6px 4px !important;
 }
 
-form .btn{
+form .btn {
   margin: 0px 8px !important;
+}
+.row {
+  margin-right: 0px;
 }

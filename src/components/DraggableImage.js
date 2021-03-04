@@ -41,10 +41,10 @@ function DraggableImage(props) {
     maxFiles: 1,
     maxSize: 1000000,
     minSize: 20000,
-    onDropAccepted: (files)=>handleImages(files)
+    onDropAccepted: (files) => handleImages(files),
   });
 
- const handleImages = (files) => {
+  const handleImages = (files) => {
     props.imageHandler(files[0]);
   };
 
@@ -59,7 +59,7 @@ function DraggableImage(props) {
   );
 
   return (
-    <div style={{cursor:"hand"}}>
+    <div style={{ cursor: "hand" }}>
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
         <p>

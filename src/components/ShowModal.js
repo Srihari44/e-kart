@@ -14,8 +14,12 @@ function ShowModal(props) {
           {props.data.title}
         </Modal.Title>
       </Modal.Header>
-          <Modal.Body>
-              <img alt="Product" style={{width:"40%", maxHeight:"225px", marginLeft:"30%"}} src={props.data.image}></img>
+      <Modal.Body>
+        <img
+          alt="Product"
+          style={{ width: "40%", maxHeight: "225px", marginLeft: "30%" }}
+          src={props.data.image}
+        ></img>
         <h4>$ {props.data.price}</h4>
         <p>{props.data.description}</p>
       </Modal.Body>

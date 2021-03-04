@@ -4,11 +4,22 @@ import AddModal from "../components/UpdateModal";
 import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { ProductsContext } from "../providers/StoreProvider";
+import FilterProducts from "../components/FilterProducts";
 
 function InventryContainer(props) {
   const [state, dispatch] = useContext(ProductsContext);
+  const [viewState, viewStateHandler] = useState(state.products);
   const [modalState, modalStateHandler] = useState(false);
   const [modalData, modalDataHandlder] = useState({});
+
+  const filterDataHandler = (categories) => {
+    let filterResults = state.products.filter((item) =>
+      categories.includes(item.category)
+    );
+    let refinedResults =
+      filterResults.length > 0 ? filterResults : state.products;
+    viewStateHandler(refinedResults);
+  };
 
   const exportHandler = () => {
     let jsonContent = JSON.stringify(state, null, 3);
@@ -32,16 +43,16 @@ function InventryContainer(props) {
 
   const showDataHandler = (id, action) => {
     let modalData = state.products.find((item) => item.id === id);
-    let type = action==="update" ? "Update" : "Add"
+    let type = action === "update" ? "Update" : "Add";
     modalDataHandlder({ actionType: type, ...modalData });
     modalStateHandler(true);
   };
 
   const updDataHandler = (id, formData) => {
-      dispatch({
-        type: "UPDATE_PRODUCT",
-        payload: { id: id, formData: formData },
-      });
+    dispatch({
+      type: "UPDATE_PRODUCT",
+      payload: { id: id, formData: formData },
+    });
     modalStateHandler(false);
   };
 
@@ -51,7 +62,7 @@ function InventryContainer(props) {
       payload: { formData: formData },
     });
     modalStateHandler(false);
-  }
+  };
 
   const handleModalClose = () => modalStateHandler(false);
 
@@ -64,25 +75,26 @@ function InventryContainer(props) {
         updHandler={updDataHandler}
         addHandler={addDataHandler}
       />
-        <div
-          style={{
-            margin: "20px 65px 0px 0px",
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button variant="outline-primary" onClick={showDataHandler}>
-            + Add Item
-          </Button>
-        </div>
+      <div
+        style={{
+          margin: "20px 65px 0px 0px",
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Button variant="outline-primary" onClick={showDataHandler}>
+          + Add Item
+        </Button>
+      </div>
+      <FilterProducts handler={filterDataHandler} />
       <Row
-        style={{ padding: "40px" }}
+        style={{ padding: "30px" }}
         sm={2}
         md={3}
         lg={4}
         className="align-items-stretch"
       >
-        {state.products.map((item) => (
+        {viewState.map((item) => (
           <Col className="d-flex justify-content-center p-3" key={item.id}>
             <Card
               data={item}
@@ -93,9 +105,9 @@ function InventryContainer(props) {
           </Col>
         ))}
       </Row>
-        <Button onClick={exportHandler} style={{ marginBottom: "35px" }}>
-          Export all Items
-        </Button>
+      <Button onClick={exportHandler} style={{ marginBottom: "35px" }}>
+        Export all Items
+      </Button>
     </React.Fragment>
   );
 }

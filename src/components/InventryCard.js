@@ -42,4 +42,4 @@ function InventryCard(props) {
     </Card>
   );
 }
-export default withRouter(InventryCard)
+export default withRouter(InventryCard);
