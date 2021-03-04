@@ -1,6 +1,6 @@
 import { Row, Col, Button } from "react-bootstrap";
 import Card from "../components/InventryCard";
-import AddModal from "../components/AddModal";
+import AddModal from "../components/UpdateModal";
 import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { ProductsContext } from "../providers/StoreProvider";

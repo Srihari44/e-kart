@@ -1,8 +1,10 @@
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import UploadImage from './UploadImage'
 
 function MyVerticallyCenteredModal(props) {
   const [formState, formHandler] = useState(props.data);
+  const urlRef = useRef(null)
   let date = new Date();
   let generatedId = date.getMilliseconds();
 
@@ -16,6 +18,7 @@ function MyVerticallyCenteredModal(props) {
   
   const handleSubmit = (e) => {
     e.preventDefault()
+    if(!urlRef.current.value){return false}
     switch (props.data.actionType) {
       case "Add":
         props.addHandler({ id: generatedId,...props.data, ...formState })
@@ -27,6 +30,11 @@ function MyVerticallyCenteredModal(props) {
         break;
     }
   }
+  const imageUrlHandler = (url) => {
+    urlRef.current.value = url
+    formHandler({ ...formState, image: url })
+  }
+
   return (
     <Modal
       show={props.show}
@@ -41,9 +49,7 @@ function MyVerticallyCenteredModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form
-          onSubmit={handleSubmit}
-        >
+        <Form onSubmit={handleSubmit}>
           <Form.Group as={Row} controlId="formPlaintextEmail">
             <Form.Label column sm="2">
               Title
@@ -54,6 +60,7 @@ function MyVerticallyCenteredModal(props) {
                 placeholder="Add your title"
                 defaultValue={props.data?.title}
                 onChange={handleChange}
+                required
               />
             </Col>
           </Form.Group>
@@ -67,6 +74,7 @@ function MyVerticallyCenteredModal(props) {
                 placeholder="Add Category"
                 defaultValue={props.data?.category}
                 onChange={handleChange}
+                required
               />
             </Col>
           </Form.Group>
@@ -81,6 +89,7 @@ function MyVerticallyCenteredModal(props) {
                 placeholder="Price in Dollars"
                 defaultValue={props.data?.price}
                 onChange={handleChange}
+                required
               />
             </Col>
           </Form.Group>
@@ -98,18 +107,20 @@ function MyVerticallyCenteredModal(props) {
               />
             </Col>
           </Form.Group>
+          <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
+            <Form.Label column sm="2">
+             Upload Image
+            </Form.Label>
+            <Col sm="10">
+              <UploadImage oldImageUrl={props.data?.image} urlHandler={imageUrlHandler} />
+            </Col>
+          </Form.Group>
           <Form.Group as={Row} controlId="formPlaintextEmail">
             <Form.Label column sm="2">
               Image URL
             </Form.Label>
             <Col sm="10">
-              <Form.Control
-                name="image"
-                type="url"
-                placeholder="Add Image URL"
-                defaultValue={props.data?.image}
-                onChange={handleChange}
-              />
+              <Form.Control required ref={urlRef} name="image" type="url" disabled defaultValue={ props.data?.image }/>
             </Col>
           </Form.Group>
           <div style={{ marginLeft: "35%" }}>
