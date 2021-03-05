@@ -43,9 +43,23 @@ function DraggableImage(props) {
     minSize: 20000,
     onDropAccepted: (files) => handleImages(files),
   });
+  const reducedTitle = (str) => {
+    let words = str.split(" ");
+    let decStr = words.length <= 3 ? str : words.slice(0, 3).join(" ");
+    return encodeURIComponent(decStr);
+  };
 
   const handleImages = (files) => {
-    props.imageHandler(files[0]);
+    let imageName = files[0].name;
+    let imageFileExtension = imageName.slice(
+      imageName.lastIndexOf("."),
+      imageName.length
+    );
+    let newImageName = reducedTitle(props.imageTitle) + imageFileExtension;
+    let imageFile = new File([files[0]], newImageName, {
+      type: files[0].type,
+    });
+    props.imageHandler(imageFile);
   };
 
   const style = useMemo(

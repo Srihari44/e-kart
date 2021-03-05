@@ -8,7 +8,7 @@ import FilterProducts from "../components/FilterProducts";
 
 function InventryContainer(props) {
   const [state, dispatch] = useContext(ProductsContext);
-  const [viewState, viewStateHandler] = useState(state.products);
+  const [filterState, filterStateHandler] = useState([]);
   const [modalState, modalStateHandler] = useState(false);
   const [modalData, modalDataHandlder] = useState({});
 
@@ -16,10 +16,10 @@ function InventryContainer(props) {
     let filterResults = state.products.filter((item) =>
       categories.includes(item.category)
     );
-    let refinedResults =
-      filterResults.length > 0 ? filterResults : state.products;
-    viewStateHandler(refinedResults);
+    return filterResults.length > 0 ? filterResults : state.products;
   };
+
+  const filteredItems = () => filterDataHandler(filterState);
 
   const exportHandler = () => {
     let jsonContent = JSON.stringify(state, null, 3);
@@ -34,18 +34,18 @@ function InventryContainer(props) {
     document.body.removeChild(link);
   };
 
-  const rmDataHandler = (id) => {
-    dispatch({
-      type: "DEL_PRODUCT",
-      payload: id,
-    });
-  };
-
   const showDataHandler = (id, action) => {
     let modalData = state.products.find((item) => item.id === id);
     let type = action === "update" ? "Update" : "Add";
     modalDataHandlder({ actionType: type, ...modalData });
     modalStateHandler(true);
+  };
+
+  const rmDataHandler = (id) => {
+    dispatch({
+      type: "DEL_PRODUCT",
+      payload: id,
+    });
   };
 
   const updDataHandler = (id, formData) => {
@@ -86,7 +86,7 @@ function InventryContainer(props) {
           + Add Item
         </Button>
       </div>
-      <FilterProducts handler={filterDataHandler} />
+      <FilterProducts handler={filterStateHandler} />
       <Row
         style={{ padding: "30px" }}
         sm={2}
@@ -94,7 +94,7 @@ function InventryContainer(props) {
         lg={4}
         className="align-items-stretch"
       >
-        {viewState.map((item) => (
+        {filteredItems().map((item) => (
           <Col className="d-flex justify-content-center p-3" key={item.id}>
             <Card
               data={item}

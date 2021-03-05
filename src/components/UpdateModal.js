@@ -52,7 +52,7 @@ function MyVerticallyCenteredModal(props) {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group as={Row} controlId="formPlaintextEmail">
+          <Form.Group as={Row}>
             <Form.Label column sm="2">
               Title
             </Form.Label>
@@ -66,7 +66,7 @@ function MyVerticallyCenteredModal(props) {
               />
             </Col>
           </Form.Group>
-          <Form.Group as={Row} controlId="formPlaintextEmail">
+          <Form.Group as={Row}>
             <Form.Label column sm="2">
               Category
             </Form.Label>
@@ -80,7 +80,7 @@ function MyVerticallyCenteredModal(props) {
               />
             </Col>
           </Form.Group>
-          <Form.Group as={Row} controlId="formPlaintextEmail">
+          <Form.Group as={Row}>
             <Form.Label column sm="2">
               Price
             </Form.Label>
@@ -115,13 +115,13 @@ function MyVerticallyCenteredModal(props) {
             </Form.Label>
             <Col sm="10">
               <UploadImage
-                title={props.data?.title}
+                title={props.data?.title || formState.title}
                 oldImageUrl={props.data?.image}
                 urlHandler={imageUrlHandler}
               />
             </Col>
           </Form.Group>
-          <Form.Group as={Row} controlId="formPlaintextEmail">
+          <Form.Group as={Row}>
             <Form.Label column sm="2">
               Image URL
             </Form.Label>

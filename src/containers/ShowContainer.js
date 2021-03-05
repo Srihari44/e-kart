@@ -10,12 +10,13 @@ function ShowContainer() {
   const [state] = useContext(ProductsContext);
   const [viewState, viewStateHandler] = useState(state.products);
   const [modalState, modalStateHandler] = useState(false);
-  const [modalData, modalDataHandlder] = useState({});
+  const [modalData, modalDataHandlder] = useState();
 
   const showDataHandler = (id) => {
     modalDataHandlder(state.products.find((item) => item.id === id));
     modalStateHandler(true);
   };
+
   const handleModalClose = () => modalStateHandler(false);
 
   const filterDataHandler = (categories) => {
@@ -33,6 +34,7 @@ function ShowContainer() {
         show={modalState}
         handleClose={handleModalClose}
         data={modalData}
+        viewHandler={viewStateHandler}
       />
       <FilterProducts handler={filterDataHandler} />
       <Row

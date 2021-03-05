@@ -11,17 +11,17 @@ function ShowModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {props.data.title}
+          {props.data?.title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <img
           alt="Product"
           style={{ width: "40%", maxHeight: "225px", marginLeft: "30%" }}
-          src={props.data.image}
+          src={props.data?.image}
         ></img>
-        <h4>$ {props.data.price}</h4>
-        <p>{props.data.description}</p>
+        <h4>$ {props.data?.price}</h4>
+        <p>{props.data?.description}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.handleClose}>Close</Button>

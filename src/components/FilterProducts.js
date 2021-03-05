@@ -14,7 +14,7 @@ const FilterDropdown = (props) => {
     control: (styles) => ({
       ...styles,
       minWidth: "240px",
-      marginLeft: "30px",
+      margin: "auto 30px",
     }),
   };
   return (
