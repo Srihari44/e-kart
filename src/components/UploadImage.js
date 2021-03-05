@@ -53,8 +53,12 @@ const ReactFirebaseFileUpload = (props) => {
       {image ? (
         <React.Fragment>
           <span>{image.name}</span>
-          <Button onClick={handleUpload}>Upload</Button>
-          <Button onClick={handleRemove}>Remove</Button>
+          <Button disabled={showProgress} onClick={handleUpload}>
+            Upload
+          </Button>
+          <Button disabled={showProgress} onClick={handleRemove}>
+            Remove
+          </Button>
         </React.Fragment>
       ) : null}
       {showProgress && <ProgressBar animated now={progress} />}

@@ -49,6 +49,7 @@ function InventryContainer(props) {
   };
 
   const updDataHandler = (id, formData) => {
+    delete(formData.actionType)
     dispatch({
       type: "UPDATE_PRODUCT",
       payload: { id: id, formData: formData },
@@ -57,6 +58,7 @@ function InventryContainer(props) {
   };
 
   const addDataHandler = (formData) => {
+    delete formData.actionType;
     dispatch({
       type: "ADD_PRODUCT",
       payload: { formData: formData },
