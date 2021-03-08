@@ -7,27 +7,28 @@ function InventryCard(props) {
     return words.length <= 4 ? str : words.slice(0, 4).join(" ") + "...";
   };
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card style={{ width: "16rem", maxHeight: "fit-content" }}>
       <Card.Img
-        style={{ height: "200px" }}
+        style={{ height: "220px", padding: "25px", paddingBottom: "0" }}
         variant="top"
         src={props.data.image}
       />
-      <Card.Body
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
+      <Card.Body className="d-flex flex-column align-items-center justify-content-between">
         <Card.Title>{reducedTitle(props.data.title)}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">
-          #{props.data.category}
+        <Card.Subtitle
+          style={{
+            width: "fit-content",
+            backgroundColor: props.data?.colors[0],
+            color: props.data?.colors[1],
+          }}
+          className="mb-2 rounded p-1 category"
+        >
+          # {props.data.category}
         </Card.Subtitle>
-        <Card.Subtitle className="mb-2 text-muted">
+        <Card.Subtitle className="mb-2 price" style={{ fontSize: "25px" }}>
           ${props.data.price}
         </Card.Subtitle>
-        <div>
+        <div className="d-flex flex-column">
           <Button onClick={() => props.showHandler(props.data.id, "update")}>
             Update Item
           </Button>

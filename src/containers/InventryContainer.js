@@ -5,6 +5,7 @@ import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { ProductsContext } from "../providers/StoreProvider";
 import FilterProducts from "../components/FilterProducts";
+import { Redirect } from "react-router";
 
 function InventryContainer(props) {
   const [state, dispatch] = useContext(ProductsContext);
@@ -35,9 +36,16 @@ function InventryContainer(props) {
   };
 
   const showDataHandler = (id, action) => {
+    let categoryList = [
+      ...new Set(state.products.map((item) => item.category)),
+    ];
     let modalData = state.products.find((item) => item.id === id);
     let type = action === "update" ? "Update" : "Add";
-    modalDataHandlder({ actionType: type, ...modalData });
+    modalDataHandlder({
+      actionType: type,
+      categories: categoryList,
+      ...modalData,
+    });
     modalStateHandler(true);
   };
 
@@ -49,7 +57,7 @@ function InventryContainer(props) {
   };
 
   const updDataHandler = (id, formData) => {
-    delete(formData.actionType)
+    delete formData.actionType;
     dispatch({
       type: "UPDATE_PRODUCT",
       payload: { id: id, formData: formData },
@@ -70,6 +78,7 @@ function InventryContainer(props) {
 
   return (
     <React.Fragment>
+      {!state.user && <Redirect to="/login" />}
       <AddModal
         show={modalState}
         handleClose={handleModalClose}
@@ -78,17 +87,30 @@ function InventryContainer(props) {
         addHandler={addDataHandler}
       />
       <div
+        className="d-flex align-items-center justify-content-between flex-wrap"
         style={{
-          margin: "20px 65px 0px 0px",
-          display: "flex",
-          justifyContent: "flex-end",
+          padding: "10px 90px 10px 5%",
+          marginTop: "20px",
         }}
       >
-        <Button variant="outline-primary" onClick={showDataHandler}>
-          + Add Item
-        </Button>
+        <FilterProducts handler={filterStateHandler} />
+        <div className="d-flex flex-wrap">
+          <Button
+            className="mr-4 my-2"
+            style={{ marginTop: "10px" }}
+            onClick={showDataHandler}
+          >
+            + Add Item
+          </Button>
+          <Button
+            className="my-2"
+            style={{ marginTop: "10px" }}
+            onClick={exportHandler}
+          >
+            Export all Items
+          </Button>
+        </div>
       </div>
-      <FilterProducts handler={filterStateHandler} />
       <Row
         style={{ padding: "30px" }}
         sm={2}
@@ -107,8 +129,12 @@ function InventryContainer(props) {
           </Col>
         ))}
       </Row>
-      <Button onClick={exportHandler} style={{ marginBottom: "35px" }}>
-        Export all Items
+      <Button
+        onClick={() => dispatch({ type: "REM_USER" })}
+        style={{ marginLeft: "45%" }}
+        className="mb-4"
+      >
+        Log out
       </Button>
     </React.Fragment>
   );

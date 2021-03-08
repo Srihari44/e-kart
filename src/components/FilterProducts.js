@@ -6,31 +6,43 @@ import { ProductsContext } from "../providers/StoreProvider";
 const FilterDropdown = (props) => {
   const [state] = useContext(ProductsContext);
   let categoryList = [...new Set(state.products.map((item) => item.category))];
-  let categoryOptionList = categoryList.map((item) => {
-    return { value: item, label: item };
+  let categoryColorList = state.products.map((item) => item.colors);
+  let bgColorList = [...new Set(categoryColorList.map((item) => item[0]))];
+  let fgColorList = [...new Set(categoryColorList.map((item) => item[1]))];
+  let categoryOptionList = categoryList.map((item, index) => {
+    return {
+      value: item,
+      label: item,
+      bgColor: bgColorList[index],
+      fgColor: fgColorList[index],
+    };
   });
+
   const animatedComponents = makeAnimated();
   const selectStyles = {
     control: (styles) => ({
       ...styles,
       minWidth: "240px",
-      margin: "auto 30px",
+    }),
+    menu: (styles) => ({ ...styles, width: "240px" }),
+    multiValue: (styles, { data }) => ({
+      ...styles,
+      backgroundColor: data.bgColor,
+      color: data.fgColor,
+    }),
+    multiValueLabel: (styles, { data }) => ({
+      ...styles,
+      color: data.fgColor,
     }),
   };
   return (
     <div
       style={{
         display: "flex",
-        marginTop: "20px",
         flexWrap: "wrap",
       }}
     >
-      <h4
-        className="navbar-brand active"
-        style={{ color: "#fff", paddingLeft: "30px" }}
-      >
-        Filter by Category
-      </h4>
+      <h3 className="navbar-brand active">Filter by Category</h3>
       <Select
         styles={selectStyles}
         label="Filter by Category"

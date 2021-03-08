@@ -5,6 +5,7 @@ import UploadImage from "./UploadImage";
 function MyVerticallyCenteredModal(props) {
   const [formState, formHandler] = useState(props.data);
   const urlRef = useRef(null);
+
   let date = new Date();
   let generatedId = date.getMilliseconds();
 
@@ -71,13 +72,14 @@ function MyVerticallyCenteredModal(props) {
               Category
             </Form.Label>
             <Col sm="10">
-              <Form.Control
-                name="category"
-                placeholder="Add Category"
-                defaultValue={props.data?.category}
-                onChange={handleChange}
-                required
-              />
+              <Form.Control as="select">
+                {props.data.categories &&
+                  props.data.categories.map((category, index) => (
+                    <option value={category} key={index}>
+                      {category}
+                    </option>
+                  ))}
+              </Form.Control>
             </Col>
           </Form.Group>
           <Form.Group as={Row}>

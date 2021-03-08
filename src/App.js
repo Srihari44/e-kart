@@ -4,18 +4,20 @@ import Navbar from "./components/Navbar";
 import { ProductsContextProvider } from "./providers/StoreProvider";
 import ShowContainer from "./containers/ShowContainer";
 import InventryContainer from "./containers/InventryContainer";
+import LoginPage from "./components/LoginPage";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <Switch>
-        <ProductsContextProvider>
+    <ProductsContextProvider>
+      <div className="App">
+        <Navbar />
+        <Switch>
           <Route path="/" exact component={ShowContainer} />
+          <Route path="/login" component={LoginPage} />
           <Route path="/inventry" component={InventryContainer} />
-        </ProductsContextProvider>
-      </Switch>
-    </div>
+        </Switch>
+      </div>
+    </ProductsContextProvider>
   );
 }
 

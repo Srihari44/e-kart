@@ -1,11 +1,19 @@
 body {
   background-color: #282c34;
 }
-.App {
-  text-align: center;
+h3{
+    color: #fff;
+
 }
 .card-body .btn {
   margin: 6px 4px !important;
+}
+.price{
+  font-style: oblique;
+}
+
+.category{
+  color: initial;
 }
 
 form .btn {
