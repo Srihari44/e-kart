@@ -1,12 +1,13 @@
 import { Card, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import FindColor from "../FindColor";
 
-const reducedTitle = (str) => {
-  let words = str.split(" ");
-  return words.length <= 4 ? str : words.slice(0, 4).join(" ") + "...";
-};
-
-function ShowCard(props) {
+function InventryCard(props) {
+  const reducedTitle = (str) => {
+    let words = str.split(" ");
+    return words.length <= 4 ? str : words.slice(0, 4).join(" ") + "...";
+  };
+  let categoryColors = FindColor(props.data.category);
   return (
     <Card style={{ width: "16rem", maxHeight: "fit-content" }}>
       <Card.Img
@@ -19,8 +20,8 @@ function ShowCard(props) {
         <Card.Subtitle
           style={{
             width: "fit-content",
-            backgroundColor: props.data?.colors[0],
-            color: props.data?.colors[1],
+            backgroundColor: categoryColors[0],
+            color: categoryColors[1],
           }}
           className="mb-2 rounded p-1 category"
         >
@@ -29,14 +30,19 @@ function ShowCard(props) {
         <Card.Subtitle className="mb-2 price" style={{ fontSize: "25px" }}>
           ${props.data.price}
         </Card.Subtitle>
-        <div>
-          <Button onClick={() => props.showHandler(props.data.id)}>
-            View Product
+        <div className="d-flex flex-column">
+          <Button onClick={() => props.showHandler(props.data.id, "update")}>
+            Update Item
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => props.rmHandler(props.data.id)}
+          >
+            Remove Item
           </Button>
         </div>
       </Card.Body>
     </Card>
   );
 }
-
-export default withRouter(ShowCard);
+export default withRouter(InventryCard);

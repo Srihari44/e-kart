@@ -1,4 +1,5 @@
 import { Modal, Button } from "react-bootstrap";
+import FindColor from "../FindColor";
 
 function ShowModal(props) {
   return (
@@ -24,8 +25,8 @@ function ShowModal(props) {
           <h4>$ {props.data?.price}</h4>
           <p
             style={{
-              backgroundColor: props.data?.colors[0],
-              color: props.data?.colors[1],
+              backgroundColor: FindColor(props.data?.category)[0],
+              color: FindColor(props.data?.category)[1],
               fontWeight: "bold",
             }}
             className="rounded p-1 category"

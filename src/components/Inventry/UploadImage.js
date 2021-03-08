@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, ProgressBar } from "react-bootstrap";
-import { storage } from "../providers/firebaseConfig";
+import { storage } from "../../providers/firebaseConfig";
 import DraggableImage from "./DraggableImage";
 
 const ReactFirebaseFileUpload = (props) => {

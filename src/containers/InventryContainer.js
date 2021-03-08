@@ -1,6 +1,6 @@
 import { Row, Col, Button } from "react-bootstrap";
-import Card from "../components/InventryCard";
-import AddModal from "../components/UpdateModal";
+import Card from "../components/Inventry/InventryCard";
+import AddModal from "../components/Inventry/UpdateModal";
 import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { ProductsContext } from "../providers/StoreProvider";
@@ -23,7 +23,7 @@ function InventryContainer(props) {
   const filteredItems = () => filterDataHandler(filterState);
 
   const exportHandler = () => {
-    let jsonContent = JSON.stringify(state, null, 3);
+    let jsonContent = JSON.stringify(state.products, null, 3);
     var link = document.createElement("a");
     link.setAttribute(
       "href",
@@ -74,14 +74,12 @@ function InventryContainer(props) {
     modalStateHandler(false);
   };
 
-  const handleModalClose = () => modalStateHandler(false);
-
   return (
     <React.Fragment>
       {!state.user && <Redirect to="/login" />}
       <AddModal
         show={modalState}
-        handleClose={handleModalClose}
+        handleClose={() => modalStateHandler(false)}
         data={modalData}
         updHandler={updDataHandler}
         addHandler={addDataHandler}

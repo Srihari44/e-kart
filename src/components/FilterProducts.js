@@ -2,19 +2,17 @@ import React, { useContext } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { ProductsContext } from "../providers/StoreProvider";
+import FindColor from "./FindColor";
 
 const FilterDropdown = (props) => {
   const [state] = useContext(ProductsContext);
   let categoryList = [...new Set(state.products.map((item) => item.category))];
-  let categoryColorList = state.products.map((item) => item.colors);
-  let bgColorList = [...new Set(categoryColorList.map((item) => item[0]))];
-  let fgColorList = [...new Set(categoryColorList.map((item) => item[1]))];
   let categoryOptionList = categoryList.map((item, index) => {
     return {
       value: item,
       label: item,
-      bgColor: bgColorList[index],
-      fgColor: fgColorList[index],
+      bgColor: FindColor(item)[0],
+      fgColor: FindColor(item)[1],
     };
   });
 

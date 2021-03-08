@@ -1,6 +1,6 @@
 import { Row, Col, Button } from "react-bootstrap";
-import ShowCard from "../components/ShowCard";
-import ShowModal from "../components/ShowModal";
+import ShowCard from "../components/Home/ShowCard";
+import ShowModal from "../components/Home/ShowModal";
 import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { ProductsContext } from "../providers/StoreProvider";
@@ -27,7 +27,7 @@ function ShowContainer() {
   };
 
   const exportHandler = () => {
-    let jsonContent = JSON.stringify(state, null, 3);
+    let jsonContent = JSON.stringify(state.products, null, 3);
     var link = document.createElement("a");
     link.setAttribute(
       "href",

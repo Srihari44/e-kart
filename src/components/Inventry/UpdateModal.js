@@ -72,7 +72,7 @@ function MyVerticallyCenteredModal(props) {
               Category
             </Form.Label>
             <Col sm="10">
-              <Form.Control as="select">
+              <Form.Control as="select" onChange={handleChange}>
                 {props.data.categories &&
                   props.data.categories.map((category, index) => (
                     <option value={category} key={index}>
@@ -89,7 +89,6 @@ function MyVerticallyCenteredModal(props) {
             <Col sm="10">
               <Form.Control
                 name="price"
-                type="number"
                 placeholder="Price in Dollars"
                 defaultValue={props.data?.price}
                 onChange={handleChange}

@@ -1,7 +1,7 @@
 import { Form, Button, Alert } from "react-bootstrap";
 import { useState, useRef, useContext } from "react";
 import { Redirect } from "react-router";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import { ProductsContext } from "../providers/StoreProvider";
 
 export default function LoginPage() {
@@ -53,7 +53,9 @@ export default function LoginPage() {
         <Button variant="primary" type="submit">
           Submit
         </Button>
-        <Link to="/" className="btn btn-outline-primary">Back</Link>
+        <Link to="/" className="btn btn-outline-primary">
+          Back
+        </Link>
       </Form>
     </div>
   );
