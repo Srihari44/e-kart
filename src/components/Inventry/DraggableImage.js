@@ -47,7 +47,6 @@ function DraggableImage(props) {
     onDropRejected: () => setError(true)
   });
   const reducedTitle = (str) => {
-    console.log(str)
     let words = str.split(" ");
     let decStr = words.length <= 3 ? str : words.slice(0, 3).join(" ");
     return encodeURIComponent(decStr);

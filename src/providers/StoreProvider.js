@@ -30,6 +30,11 @@ const reducer = (state, action) => {
         ...state,
         products: state.products.filter((item) => item.id !== action.payload),
       };
+    case "BATCH_ADD_PRODUCT":
+      return {
+        ...state,
+        products: [...state.products, ...action.payload.productList]
+      }
     case "ADD_USER":
       return { ...state, user: true };
 

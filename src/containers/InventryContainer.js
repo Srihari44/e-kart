@@ -1,6 +1,7 @@
 import { Row, Col, Button } from "react-bootstrap";
 import Card from "../components/Inventry/InventryCard";
-import AddModal from "../components/Inventry/UpdateModal";
+import ProductUpdateModal from "../components/Inventry/ProductUpdateModal";
+import AddCategoryModal from "../components/Inventry/AddCategoryModal";
 import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { ProductsContext } from "../providers/StoreProvider";
@@ -10,8 +11,9 @@ import { Redirect } from "react-router";
 function InventryContainer(props) {
   const [state, dispatch] = useContext(ProductsContext);
   const [filterState, filterStateHandler] = useState([]);
-  const [modalState, modalStateHandler] = useState(false);
+  const [productModalState, setProductModalState] = useState(false);
   const [modalData, modalDataHandlder] = useState({});
+  const [categoryModalState, setCategoryModalState] = useState(false);
 
   const filterDataHandler = (categories) => {
     let filterResults = state.products.filter((item) =>
@@ -46,7 +48,7 @@ function InventryContainer(props) {
       categories: categoryList,
       ...modalData,
     });
-    modalStateHandler(true);
+    setProductModalState(true);
   };
 
   const rmDataHandler = (id) => {
@@ -62,7 +64,7 @@ function InventryContainer(props) {
       type: "UPDATE_PRODUCT",
       payload: { id: id, formData: formData },
     });
-    modalStateHandler(false);
+    setProductModalState(false);
   };
 
   const addDataHandler = (formData) => {
@@ -71,18 +73,27 @@ function InventryContainer(props) {
       type: "ADD_PRODUCT",
       payload: { formData: formData },
     });
-    modalStateHandler(false);
+    setProductModalState(false);
+  };
+
+  const batchProductHandler = (data) => {
+
   };
 
   return (
     <React.Fragment>
       {!state.user && <Redirect to="/login" />}
-      <AddModal
-        show={modalState}
-        handleClose={() => modalStateHandler(false)}
+      <ProductUpdateModal
+        show={productModalState}
+        handleClose={() => setProductModalState(false)}
         data={modalData}
         updHandler={updDataHandler}
         addHandler={addDataHandler}
+      />
+      <AddCategoryModal
+        show={categoryModalState}
+        handleClose={() => setCategoryModalState(false)}
+        submitHandler = {batchProductHandler}
       />
       <div
         className="d-flex align-items-center justify-content-between flex-wrap"
@@ -98,12 +109,16 @@ function InventryContainer(props) {
             style={{ marginTop: "10px" }}
             onClick={showDataHandler}
           >
-            + Add Item
+            + Add Product
           </Button>
           <Button
-            className="my-2"
-            onClick={exportHandler}
+            className="mr-4 my-lg-2 mt-2"
+            style={{ marginTop: "10px" }}
+            onClick={() => setCategoryModalState(true)}
           >
+            + Add category
+          </Button>
+          <Button className="my-2" onClick={exportHandler}>
             Export all Items
           </Button>
         </div>
