@@ -116,7 +116,7 @@ function MyVerticallyCenteredModal(props) {
             </Form.Label>
             <Col sm="10">
               <UploadImage
-                title={props.data?.title || formState.title}
+                title={props.data?.title || formState.title || "untitled"}
                 oldImageUrl={props.data?.image}
                 urlHandler={imageUrlHandler}
               />

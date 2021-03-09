@@ -94,7 +94,7 @@ function InventryContainer(props) {
         <FilterProducts handler={filterStateHandler} />
         <div className="d-flex flex-wrap">
           <Button
-            className="mr-4 my-2"
+            className="mr-4 my-lg-2 mt-2"
             style={{ marginTop: "10px" }}
             onClick={showDataHandler}
           >
@@ -102,7 +102,6 @@ function InventryContainer(props) {
           </Button>
           <Button
             className="my-2"
-            style={{ marginTop: "10px" }}
             onClick={exportHandler}
           >
             Export all Items

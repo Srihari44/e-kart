@@ -1,6 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { useDropzone } from "react-dropzone";
+
 const baseStyle = {
   flex: 1,
   display: "flex",
@@ -30,6 +31,7 @@ const rejectStyle = {
 };
 
 function DraggableImage(props) {
+  const [error, setError] = useState(false);
   const {
     getRootProps,
     getInputProps,
@@ -37,19 +39,22 @@ function DraggableImage(props) {
     isDragAccept,
     isDragReject,
   } = useDropzone({
-    accept: "image/*",
+    accept: ["image/jpeg", "image/png"],
     maxFiles: 1,
     maxSize: 1000000,
     minSize: 20000,
     onDropAccepted: (files) => handleImages(files),
+    onDropRejected: () => setError(true)
   });
   const reducedTitle = (str) => {
+    console.log(str)
     let words = str.split(" ");
     let decStr = words.length <= 3 ? str : words.slice(0, 3).join(" ");
     return encodeURIComponent(decStr);
   };
 
   const handleImages = (files) => {
+    setError(false);
     let imageName = files[0].name;
     let imageFileExtension = imageName.slice(
       imageName.lastIndexOf("."),
@@ -81,11 +86,11 @@ function DraggableImage(props) {
           size 20kb and Maximum file size is 1mb
         </p>
       </div>
-      {isDragReject ? (
-        <Alert variant="danger">
-          Please provide image according to instructions
+      {error && (
+        <Alert className="mt-2" variant="danger">
+          Image not accepted. Please provide image according to instructions
         </Alert>
-      ) : null}
+      )}
     </div>
   );
 }
