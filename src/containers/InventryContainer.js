@@ -6,9 +6,10 @@ import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { ProductsContext } from "../providers/StoreProvider";
 import FilterProducts from "../components/FilterProducts";
+import ExportProducts from "../components/ExportProducts";
 import { Redirect } from "react-router";
 
-function InventryContainer(props) {
+function InventryContainer() {
   const [state, dispatch] = useContext(ProductsContext);
   const [filterState, filterStateHandler] = useState([]);
   const [productModalState, setProductModalState] = useState(false);
@@ -23,19 +24,6 @@ function InventryContainer(props) {
   };
 
   const filteredItems = () => filterDataHandler(filterState);
-
-  const exportHandler = () => {
-    let jsonContent = JSON.stringify(state.products, null, 3);
-    var link = document.createElement("a");
-    link.setAttribute(
-      "href",
-      "data:text/json;charset=utf-8," + encodeURIComponent(jsonContent)
-    );
-    link.setAttribute("download", "ExportedData.json");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   const showDataHandler = (id, action) => {
     let categoryList = [
@@ -76,10 +64,6 @@ function InventryContainer(props) {
     setProductModalState(false);
   };
 
-  const batchProductHandler = (data) => {
-
-  };
-
   return (
     <React.Fragment>
       {!state.user && <Redirect to="/login" />}
@@ -93,7 +77,6 @@ function InventryContainer(props) {
       <AddCategoryModal
         show={categoryModalState}
         handleClose={() => setCategoryModalState(false)}
-        submitHandler = {batchProductHandler}
       />
       <div
         className="d-flex align-items-center justify-content-between flex-wrap"
@@ -118,9 +101,7 @@ function InventryContainer(props) {
           >
             + Add category
           </Button>
-          <Button className="my-2" onClick={exportHandler}>
-            Export all Items
-          </Button>
+          <ExportProducts />
         </div>
       </div>
       <Row

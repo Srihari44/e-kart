@@ -5,6 +5,7 @@ import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { ProductsContext } from "../providers/StoreProvider";
 import FilterProducts from "../components/FilterProducts";
+import ExportProducts from "../components/ExportProducts";
 
 function ShowContainer() {
   const [state, dispatch] = useContext(ProductsContext);
@@ -26,19 +27,6 @@ function ShowContainer() {
     viewStateHandler(refinedResults);
   };
 
-  const exportHandler = () => {
-    let jsonContent = JSON.stringify(state.products, null, 3);
-    var link = document.createElement("a");
-    link.setAttribute(
-      "href",
-      "data:text/json;charset=utf-8," + encodeURIComponent(jsonContent)
-    );
-    link.setAttribute("download", "ExportedData.json");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <React.Fragment>
       <ShowModal
@@ -54,9 +42,7 @@ function ShowContainer() {
         }}
       >
         <FilterProducts handler={filterDataHandler} />
-        <Button style={{ marginTop: "10px" }} onClick={exportHandler}>
-          Export all Items
-        </Button>
+        <ExportProducts />
       </div>
       <Row
         style={{ padding: "30px" }}
