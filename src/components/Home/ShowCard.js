@@ -31,8 +31,8 @@ function ShowCard(props) {
         <Card.Subtitle className="mb-2 price" style={{ fontSize: "25px" }}>
           ${props.data.price}
         </Card.Subtitle>
-        <div>
-          <Button onClick={() => props.showHandler(props.data.id)}>
+        <div className="d-flex flex-column align-items-stretch">
+          <Button onClick={() => props.addCartHandler(props.data.id)}>
             Add to Cart
           </Button>
           <Button onClick={() => props.showHandler(props.data.id)}>

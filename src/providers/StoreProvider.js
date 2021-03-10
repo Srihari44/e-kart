@@ -5,10 +5,52 @@ export const ProductsContext = createContext();
 const initialState = {
   user: localStorage.getItem("userState"),
   products: data,
+  checkedOutProducts: [],
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "UPDATE_PRODUCT_CHECKOUT":
+      let newProductProps = state.products.find(
+        (item) => item.id === action.payload.id
+      );
+      let oldProductProps = state.checkedOutProducts.find(
+        (item) => item.id === action.payload.id
+      );
+
+      let productProps = oldProductProps || newProductProps;
+      let productPropsCount = productProps?.count || 0;
+
+      let updatedProductPropsCount = action.payload.removeCount
+        ? productPropsCount - 1
+        : productPropsCount + 1;
+      
+      let updateBeforeIndex = state.checkedOutProducts.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      return {
+        ...state,
+        checkedOutProducts: [
+          ...state.checkedOutProducts.slice(0, updateBeforeIndex),
+          {
+            ...productProps,
+            count: updatedProductPropsCount,
+            subtotal: updatedProductPropsCount * productProps.price,
+          },
+          ...state.checkedOutProducts.slice(updateBeforeIndex + 1),
+        ],
+      };
+
+    case "REMOVE_PRODUCT_CHECKOUT":
+      let removeBeforeIndex = state.checkedOutProducts.findIndex(
+        (item) => item.id === action.payload.id
+      ); 
+      let deletedCheckout = [
+        ...state.checkedOutProducts.slice(0, removeBeforeIndex),
+        ...state.checkedOutProducts.slice(removeBeforeIndex + 1),
+      ];
+      return { ...state, checkedOutProducts: deletedCheckout };
+
     case "ADD_PRODUCT":
       return {
         ...state,

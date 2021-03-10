@@ -27,6 +27,13 @@ function ShowContainer() {
     viewStateHandler(refinedResults);
   };
 
+  const addCartHandler = (id) => {
+    dispatch({
+      type: "UPDATE_PRODUCT_CHECKOUT",
+      payload: { id: id },
+    });
+  };
+
   return (
     <React.Fragment>
       <ShowModal
@@ -53,7 +60,11 @@ function ShowContainer() {
       >
         {viewState.map((item) => (
           <Col className="d-flex justify-content-center p-3" key={item.id}>
-            <ShowCard data={item} showHandler={showDataHandler} />
+            <ShowCard
+              data={item}
+              showHandler={showDataHandler}
+              addCartHandler={addCartHandler}
+            />
           </Col>
         ))}
       </Row>

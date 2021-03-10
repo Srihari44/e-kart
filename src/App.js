@@ -5,6 +5,7 @@ import { ProductsContextProvider } from "./providers/StoreProvider";
 import ShowContainer from "./containers/ShowContainer";
 import InventryContainer from "./containers/InventryContainer";
 import LoginPage from "./components/LoginPage";
+import Checkout from "./components/Checkout";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Navbar />
         <Switch>
           <Route path="/" exact component={ShowContainer} />
+          <Route path="/checkout" component={Checkout} />
           <Route path="/login" component={LoginPage} />
           <Route path="/inventry" component={InventryContainer} />
         </Switch>
