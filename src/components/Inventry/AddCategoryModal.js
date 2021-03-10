@@ -4,21 +4,23 @@ import { Alert, Modal, ListGroup, Button } from "react-bootstrap";
 import ProductUpdateForm from "./ProductUpdateForm";
 
 export default function AddCategoryModal(props) {
-
   const [category, categoryHandler] = useState(null);
   const [products, productStateHandler] = useState([]);
   const [showProductForm, setShowProductForm] = useState(false);
   const [error, errorHandler] = useState(false);
 
   //eslint-disable-next-line
-    const [state, dispatch] = useContext(ProductsContext);
-    
-      let date = new Date();
-      let generatedId = date.getMilliseconds();
+  const [state, dispatch] = useContext(ProductsContext);
+
+  let date = new Date();
+  let generatedId = date.getMilliseconds();
 
   const productHandleSubmit = (e, formData) => {
     e.preventDefault();
-    productStateHandler([...products, { ...formData, id:generatedId, category: category }]);
+    productStateHandler([
+      ...products,
+      { ...formData, id: generatedId, category: category },
+    ]);
     setShowProductForm(false);
   };
 
@@ -90,7 +92,7 @@ export default function AddCategoryModal(props) {
             Add Product
           </Button>
         )}
-        {products.length>0 && (
+        {products.length > 0 && (
           <div>
             <p>Added Product List</p>
             <ListGroup>

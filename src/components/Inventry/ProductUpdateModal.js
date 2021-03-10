@@ -1,12 +1,11 @@
 import { Modal } from "react-bootstrap";
-import ProductUpdateForm from "./ProductUpdateForm"
+import ProductUpdateForm from "./ProductUpdateForm";
 
 function MyVerticallyCenteredModal(props) {
-
   let date = new Date();
   let generatedId = date.getMilliseconds();
 
-  const handleSubmit = (e,formState) => {
+  const handleSubmit = (e, formState) => {
     e.preventDefault();
     switch (props.data.actionType) {
       case "Add":
@@ -34,7 +33,11 @@ function MyVerticallyCenteredModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <ProductUpdateForm handleClose={props.handleClose} data={props.data} submitHandler={ handleSubmit } />
+        <ProductUpdateForm
+          handleClose={props.handleClose}
+          data={props.data}
+          submitHandler={handleSubmit}
+        />
       </Modal.Body>
     </Modal>
   );

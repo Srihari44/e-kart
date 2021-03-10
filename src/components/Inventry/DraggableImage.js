@@ -44,7 +44,7 @@ function DraggableImage(props) {
     maxSize: 1000000,
     minSize: 20000,
     onDropAccepted: (files) => handleImages(files),
-    onDropRejected: () => setError(true)
+    onDropRejected: () => setError(true),
   });
   const reducedTitle = (str) => {
     let words = str.split(" ");

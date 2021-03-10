@@ -33,6 +33,9 @@ function ShowCard(props) {
         </Card.Subtitle>
         <div>
           <Button onClick={() => props.showHandler(props.data.id)}>
+            Add to Cart
+          </Button>
+          <Button onClick={() => props.showHandler(props.data.id)}>
             View Product
           </Button>
         </div>

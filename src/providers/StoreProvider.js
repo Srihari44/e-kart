@@ -9,13 +9,12 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-
     case "ADD_PRODUCT":
       return {
         ...state,
         products: [...state.products, action.payload.formData],
       };
-    
+
     case "UPDATE_PRODUCT":
       const removedArr = [
         ...state.products.filter((item) => item.id !== action.payload.id),
@@ -27,25 +26,25 @@ const reducer = (state, action) => {
           { id: action.payload.id, ...action.payload.formData },
         ],
       };
-    
+
     case "DEL_PRODUCT":
       return {
         ...state,
         products: state.products.filter((item) => item.id !== action.payload),
       };
-    
+
     case "BATCH_ADD_PRODUCT":
       return {
         ...state,
-        products: [...state.products, ...action.payload.productList]
-      }
-    
+        products: [...state.products, ...action.payload.productList],
+      };
+
     case "ADD_USER":
-      localStorage.setItem("userState",JSON.stringify({name:"testuser"}))
+      localStorage.setItem("userState", JSON.stringify({ name: "testuser" }));
       return { ...state, user: "testuser" };
 
     case "REM_USER":
-      localStorage.removeItem("userState")
+      localStorage.removeItem("userState");
       return { ...state, user: null };
 
     default:

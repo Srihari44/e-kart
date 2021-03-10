@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Button, ProgressBar } from "react-bootstrap";
+import { ProgressBar } from "react-bootstrap";
 import { storage } from "../../providers/firebaseConfig";
 import DraggableImage from "./DraggableImage";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 
 const ReactFirebaseFileUpload = (props) => {
   const [image, setImage] = useState(null);
@@ -52,16 +55,28 @@ const ReactFirebaseFileUpload = (props) => {
       />
       {image ? (
         <React.Fragment>
-          <span>{image.name}</span>
-          <Button disabled={showProgress} onClick={handleUpload}>
-            Upload
-          </Button>
-          <Button disabled={showProgress} onClick={handleRemove}>
-            Remove
-          </Button>
+          <div
+            className="d-flex align-items-center rounded d-block my-3 p-2 justify-content-between"
+            style={{ border: "2px solid #eee" }}
+          >
+            <div
+              className="px-2 d-flex flex-column"
+            >
+              <span className="pb-2">{image.name}</span>
+              <span>Size: {Math.round(image.size / 1000)} KB</span>
+            </div>
+            {showProgress && <ProgressBar style={{ minWidth: "105px" }} animated now={progress} />}
+            <div>
+              <IconButton onClick={handleUpload} disabled={showProgress}>
+                <CloudUploadIcon />
+              </IconButton>
+              <IconButton onClick={handleRemove} disabled={showProgress}>
+                <DeleteIcon />
+              </IconButton>
+            </div>
+          </div>
         </React.Fragment>
       ) : null}
-      {showProgress && <ProgressBar animated now={progress} />}
     </div>
   );
 };
