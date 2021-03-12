@@ -1,10 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import UploadImage from "./UploadImage";
 
 export default function UpdateForm(props) {
   const [formState, formHandler] = useState(props.data);
-  const urlRef = useRef(null);
 
   const handleChange = (e) => {
     let propertyName = e.target.getAttribute("name");
@@ -15,7 +14,6 @@ export default function UpdateForm(props) {
   };
 
   const imageUrlHandler = (url) => {
-    urlRef.current.value = url;
     formHandler({ ...formState, image: url });
   };
 
@@ -89,21 +87,6 @@ export default function UpdateForm(props) {
             title={props.data?.title || formState.title || "untitled"}
             oldImageUrl={props.data?.image}
             urlHandler={imageUrlHandler}
-          />
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          Image URL
-        </Form.Label>
-        <Col sm="10">
-          <Form.Control
-            required
-            ref={urlRef}
-            name="image"
-            type="url"
-            disabled
-            defaultValue={props.data?.image}
           />
         </Col>
       </Form.Group>

@@ -14,6 +14,7 @@ const reducer = (state, action) => {
       let newProductProps = state.products.find(
         (item) => item.id === action.payload.id
       );
+
       let oldProductProps = state.checkedOutProducts.find(
         (item) => item.id === action.payload.id
       );
@@ -24,10 +25,23 @@ const reducer = (state, action) => {
       let updatedProductPropsCount = action.payload.removeCount
         ? productPropsCount - 1
         : productPropsCount + 1;
-      
+
       let updateBeforeIndex = state.checkedOutProducts.findIndex(
         (item) => item.id === action.payload.id
       );
+      if (updateBeforeIndex === -1) {
+        return {
+          ...state,
+          checkedOutProducts: [
+            {
+              ...productProps,
+              count: updatedProductPropsCount,
+              subtotal: updatedProductPropsCount * productProps.price,
+            },
+            ...state.checkedOutProducts,
+          ],
+        };
+      }
       return {
         ...state,
         checkedOutProducts: [
@@ -44,7 +58,7 @@ const reducer = (state, action) => {
     case "REMOVE_PRODUCT_CHECKOUT":
       let removeBeforeIndex = state.checkedOutProducts.findIndex(
         (item) => item.id === action.payload.id
-      ); 
+      );
       let deletedCheckout = [
         ...state.checkedOutProducts.slice(0, removeBeforeIndex),
         ...state.checkedOutProducts.slice(removeBeforeIndex + 1),

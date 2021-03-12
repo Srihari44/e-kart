@@ -1,60 +1,21 @@
-import React, { useContext, useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
-import { ProductsContext } from "../providers/StoreProvider";
-import { Button, ListGroup } from "react-bootstrap";
-import FindColor from "./FindColor";
-
-function Checkout(props) {
-  const [state, dispatch] = useContext(ProductsContext);
-  const [total, totalHandler] = useState(0);
-
-  useEffect(() => {
-    let subtotalArr = [
-      ...state.checkedOutProducts.map((item) => item.subtotal),
-    ];
-    let totalPrice = subtotalArr.length
-      ? subtotalArr.reduce((a, c) => a + c)
-      : 0;
-    totalHandler(totalPrice);
-  }, [state.checkedOutProducts]);
-
-  const updateProductCount = (id, rmFlag = false) => {
-    dispatch({
-      type: "UPDATE_PRODUCT_CHECKOUT",
-      payload: { id: id, removeCount: rmFlag },
-    });
-  };
-
-  const removeProduct = (id) => {
-    dispatch({
-      type: "REMOVE_PRODUCT_CHECKOUT",
-      payload: { id: id },
-    });
-  };
-
-  return (
-    <React.Fragment>
-      <div className="">
+export default function Cart() {
+    return (
         {state.checkedOutProducts.length ? (
-          <div className="p-3 bg-white d-flex align-items-center flex-wrap">
-            <div className="ml-lg-5 pl-lg-5">
+          <div className="p-3 bg-white d-flex align-items-center justify-content-center">
+            <div className="flex-column justify-content-center align-items-center flex-wrap">
               <p className="text-center" style={{ fontSize: "2.5rem" }}>
                 Cart Items
               </p>
-              <ListGroup
-                style={{
-                  maxWidth: "750px",
-                }}
-              >
+              <ListGroup style={{ maxWidth: "475px" }}>
                 {state.checkedOutProducts.map((item) => (
                   <ListGroup.Item
                     style={{ height: "auto" }}
-                    className="d-flex w-100 align-self-start"
+                    className="d-flex w-100 align-self-start justify-content-between"
                     key={item.id}
                   >
                     <div className="d-flex flex-column h-100 mr-lg-5">
                       <img
-                        style={{ height: "130px", width: "110px" }}
+                        style={{ height: "150px", width: "125px" }}
                         alt={item.title}
                         src={item.image}
                       />
@@ -100,22 +61,10 @@ function Checkout(props) {
                 ))}
               </ListGroup>
             </div>
-            <div className="d-flex justify-content-between flex-wrap">
-              <div style={{ width: "100px" }}></div>
-              <div>
-                <p
-                  className="text-primary text-center py-2 m-0 align-self-baseline"
-                  style={{ fontSize: "1.5rem" }}
-                >
-                  Total
-                </p>
-                <p
-                  className="p-0 m-0"
-                  style={{ fontSize: "2.5rem", fontWeight: "400" }}
-                >
-                  ${total}
-                </p>
-              </div>
+            <div>
+              <h3 className="text-primary text-center mt-3">
+                Total: <span>${total}</span>
+              </h3>
             </div>
           </div>
         ) : (
@@ -137,9 +86,5 @@ function Checkout(props) {
             </Button>
           </div>
         )}
-      </div>
-    </React.Fragment>
-  );
+    )
 }
-
-export default withRouter(Checkout);
