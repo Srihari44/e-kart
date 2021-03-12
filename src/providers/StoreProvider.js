@@ -29,19 +29,10 @@ const reducer = (state, action) => {
       let updateBeforeIndex = state.checkedOutProducts.findIndex(
         (item) => item.id === action.payload.id
       );
-      if (updateBeforeIndex === -1) {
-        return {
-          ...state,
-          checkedOutProducts: [
-            {
-              ...productProps,
-              count: updatedProductPropsCount,
-              subtotal: updatedProductPropsCount * productProps.price,
-            },
-            ...state.checkedOutProducts,
-          ],
-        };
-      }
+
+      let updateAfterIndex =
+        updateBeforeIndex === -1 ? updateBeforeIndex : updateBeforeIndex + 1;
+
       return {
         ...state,
         checkedOutProducts: [
@@ -51,7 +42,7 @@ const reducer = (state, action) => {
             count: updatedProductPropsCount,
             subtotal: updatedProductPropsCount * productProps.price,
           },
-          ...state.checkedOutProducts.slice(updateBeforeIndex + 1),
+          ...state.checkedOutProducts.slice(updateAfterIndex),
         ],
       };
 
@@ -68,18 +59,19 @@ const reducer = (state, action) => {
     case "ADD_PRODUCT":
       return {
         ...state,
-        products: [...state.products, action.payload.formData],
+        products: [action.payload.formData, ...state.products],
       };
 
     case "UPDATE_PRODUCT":
-      const removedArr = [
-        ...state.products.filter((item) => item.id !== action.payload.id),
-      ];
+      let updateProductIndex = state.products.findIndex(
+        (item) => item.id === action.payload.id
+      );
       return {
         ...state,
         products: [
-          ...removedArr,
+          ...state.products.slice(0, updateProductIndex),
           { id: action.payload.id, ...action.payload.formData },
+          ...state.products.slice(updateProductIndex + 1),
         ],
       };
 
@@ -92,7 +84,7 @@ const reducer = (state, action) => {
     case "BATCH_ADD_PRODUCT":
       return {
         ...state,
-        products: [...state.products, ...action.payload.productList],
+        products: [...action.payload.productList, ...state.products],
       };
 
     case "ADD_USER":

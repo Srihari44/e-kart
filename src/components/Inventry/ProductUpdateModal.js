@@ -5,14 +5,13 @@ function MyVerticallyCenteredModal(props) {
   let date = new Date();
   let generatedId = date.getMilliseconds();
 
-  const handleSubmit = (e, formState) => {
-    e.preventDefault();
+  const updateProducts = (formState) => {
     switch (props.data.actionType) {
       case "Add":
-        props.addHandler({ id: generatedId, ...props.data, ...formState });
+        props.addHandler({ id: generatedId, ...formState });
         break;
       case "Update":
-        props.updHandler(props.data.id, { ...props.data, ...formState });
+        props.updHandler(formState.id, formState);
         break;
       default:
         break;
@@ -36,7 +35,7 @@ function MyVerticallyCenteredModal(props) {
         <ProductUpdateForm
           handleClose={props.handleClose}
           data={props.data}
-          submitHandler={handleSubmit}
+          submitHandler={updateProducts}
         />
       </Modal.Body>
     </Modal>

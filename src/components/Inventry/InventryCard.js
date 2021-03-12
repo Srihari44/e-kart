@@ -16,7 +16,9 @@ function InventryCard(props) {
         src={props.data.image}
       />
       <Card.Body className="d-flex flex-column align-items-center justify-content-between">
-        <Card.Title>{reducedTitle(props.data.title)}</Card.Title>
+        <Card.Title>
+          {props.data.title && reducedTitle(props.data.title)}
+        </Card.Title>
         <Card.Subtitle
           style={{
             width: "fit-content",

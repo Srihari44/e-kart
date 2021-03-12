@@ -75,7 +75,7 @@ export default function AddCategoryModal(props) {
             </p>
             <ProductUpdateForm
               isNewCategory
-              data=""
+              data={{ category: category }}
               handleClose={() => setShowProductForm(false)}
               submitHandler={productHandleSubmit}
             />

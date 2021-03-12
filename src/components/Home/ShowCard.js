@@ -17,7 +17,9 @@ function ShowCard(props) {
         src={props.data.image}
       />
       <Card.Body className="d-flex flex-column align-items-center justify-content-between">
-        <Card.Title>{reducedTitle(props.data.title)}</Card.Title>
+        <Card.Title>
+          {props.data.title && reducedTitle(props.data.title)}
+        </Card.Title>
         <Card.Subtitle
           style={{
             width: "fit-content",
@@ -31,14 +33,17 @@ function ShowCard(props) {
         <Card.Subtitle className="mb-2 price" style={{ fontSize: "25px" }}>
           ${props.data.price}
         </Card.Subtitle>
-        <div className="d-flex flex-column align-items-stretch">
-          <Button onClick={() => props.addCartHandler(props.data.id)}>
-            Add to Cart
-          </Button>
-          <Button onClick={() => props.showHandler(props.data.id)}>
-            View Product
-          </Button>
-        </div>
+
+        {props.addCartHandler && (
+          <div className="d-flex flex-column align-items-stretch">
+            <Button onClick={() => props.addCartHandler(props.data.id)}>
+              Add to Cart
+            </Button>
+            <Button onClick={() => props.showHandler(props.data.id)}>
+              View Product
+            </Button>
+          </div>
+        )}
       </Card.Body>
     </Card>
   );
