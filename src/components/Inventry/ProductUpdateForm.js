@@ -97,7 +97,7 @@ export default function UpdateForm(props) {
             </Form.Label>
             <Col sm="10">
               <UploadImage
-                title={props.data?.title || formState.title || "untitled"}
+                title={formState?.title || props.data?.title || "untitled"}
                 oldImageUrl={props.data?.image}
                 urlHandler={imageUrlHandler}
               />

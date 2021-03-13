@@ -64,7 +64,7 @@ const ReactFirebaseFileUpload = (props) => {
       {image ? (
         <React.Fragment>
           <div
-            className="d-flex align-items-center rounded d-block my-3 p-2 justify-content-between"
+            className="d-flex align-items-center rounded d-block my-3 p-2 justify-content-between flex-wrap"
             style={{ border: "2px solid #eee" }}
           >
             <div className="px-2 d-flex flex-column">

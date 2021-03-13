@@ -5,9 +5,18 @@ import { ProductsContext } from "../providers/StoreProvider";
 
 export default function ExportProducts() {
   const [state] = useContext(ProductsContext);
-
+  let newProducts = state.products.map((itemObj) => {
+    return {
+      id: itemObj.id,
+      title: itemObj.title,
+      price: itemObj.price,
+      description: itemObj.description,
+      category: itemObj.category,
+      image: itemObj.image,
+    };
+  });
   const exportHandler = () => {
-    let jsonContent = JSON.stringify(state.products, null, 3);
+    let jsonContent = JSON.stringify(newProducts, null, 3);
     var link = document.createElement("a");
     link.setAttribute(
       "href",
@@ -24,7 +33,7 @@ export default function ExportProducts() {
       <Dropdown.Toggle id="dropdown-basic">Export Products</Dropdown.Toggle>
       <Dropdown.Menu>
         <CSVLink
-          data={state.products}
+          data={newProducts}
           filename={"ExportedProducts.csv"}
           className="dropdown-item"
           target="_blank"
