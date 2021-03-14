@@ -104,11 +104,11 @@ export default function UpdateForm(props) {
             </Col>
           </Form.Group>
           <div className="d-flex justify-content-center">
+            <Button variant="secondary" onClick={props.handleClose}>
+              Cancel{" "}
+            </Button>
             <Button variant="primary" type="submit">
               Next{" "}
-            </Button>
-            <Button variant="primary" onClick={props.handleClose}>
-              Cancel{" "}
             </Button>
           </div>
         </Form>
@@ -116,12 +116,16 @@ export default function UpdateForm(props) {
       <Tab eventKey="preview" title="Preview" disabled>
         <div className="d-flex align-items-center p-3 flex-wrap">
           <p style={{ fontSize: "1.5rem", maxWidth: "425px" }}>
-            Are you sure to proceed with this changes? This is how it looks
+            Are you sure to proceed with this changes?
           </p>
           {formState && <ShowCard data={{ ...props.data, ...formState }} />}
         </div>
         <div className="d-flex justify-content-center">
-          <Button className="mr-5" onClick={() => setKey("editform")}>
+          <Button
+            className="mr-3"
+            variant="secondary"
+            onClick={() => setKey("editform")}
+          >
             Back
           </Button>
           <Button onClick={() => props.submitHandler(formState)}>

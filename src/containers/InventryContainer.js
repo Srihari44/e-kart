@@ -1,13 +1,14 @@
+import React, { useState, useContext } from "react";
+import { withRouter } from "react-router-dom";
+import { Redirect } from "react-router";
 import { Row, Col, Button } from "react-bootstrap";
+import { ProductsContext } from "../providers/StoreProvider";
 import Card from "../components/Inventry/InventryCard";
 import ProductUpdateModal from "../components/Inventry/ProductUpdateModal";
 import AddCategoryModal from "../components/Inventry/AddCategoryModal";
-import React, { useState, useContext } from "react";
-import { withRouter } from "react-router-dom";
-import { ProductsContext } from "../providers/StoreProvider";
+import RemoveModal from "../components/Inventry/RemoveModal";
 import FilterProducts from "../components/FilterProducts";
 import ExportProducts from "../components/ExportProducts";
-import { Redirect } from "react-router";
 
 function InventryContainer() {
   const [state, dispatch] = useContext(ProductsContext);
@@ -15,6 +16,8 @@ function InventryContainer() {
   const [productModalState, setProductModalState] = useState(false);
   const [modalData, modalDataHandlder] = useState({});
   const [categoryModalState, setCategoryModalState] = useState(false);
+  const [rmModalState, setRmModalState] = useState(false)
+  const [rmModalData, setRmModalData] = useState({})
 
   const filterDataHandler = (categories) => {
     let filterResults = state.products.filter((item) =>
@@ -46,6 +49,11 @@ function InventryContainer() {
     });
   };
 
+  const showRmDataHandler = (data) => {
+    setRmModalData(data)
+    setRmModalState(true)
+  }
+
   const updDataHandler = (id, formData) => {
     dispatch({
       type: "UPDATE_PRODUCT",
@@ -76,6 +84,7 @@ function InventryContainer() {
         show={categoryModalState}
         handleClose={() => setCategoryModalState(false)}
       />
+      <RemoveModal show={rmModalState} handleClose={()=>setRmModalState(false)} rmHandler={rmDataHandler} data={rmModalData }/>
       <div
         className="d-flex align-items-center justify-content-between flex-wrap"
         style={{
@@ -113,7 +122,7 @@ function InventryContainer() {
           <Col className="d-flex justify-content-center p-3" key={item.id}>
             <Card
               data={item}
-              rmHandler={rmDataHandler}
+              rmHandler={showRmDataHandler}
               showHandler={showDataHandler}
               upHandler={updDataHandler}
             />

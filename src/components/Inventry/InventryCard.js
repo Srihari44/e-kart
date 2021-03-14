@@ -38,7 +38,7 @@ function InventryCard(props) {
           </Button>
           <Button
             variant="danger"
-            onClick={() => props.rmHandler(props.data.id)}
+            onClick={() => props.rmHandler(props.data)}
           >
             Remove Item
           </Button>
